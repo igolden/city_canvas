@@ -6,35 +6,47 @@ function init() {
   // sun is a javascript declared element
   // replaced it with solar
   var solar = new createjs.Shape();
-  solar.graphics.beginFill("Yellow").drawCircle(0, 0, 50);
-  stage.addChild(solar);
 
   // Get time and set location of sun
-  var hours = moment().hour();
+  var hours = 8
   var minutes = moment().minutes();
   if (hours > 18) {
     var current_hours = hours - 18;
     var current_time = (current_hours*60) + minutes;
     var twelve_hours = (12*60);
     var fraction = (current_time/twelve_hours);
+    // Make the moon for night
+    solar.graphics.beginFill("White").drawCircle(0, 0, 50);
+    stage.addChild(solar);
+    document.getElementById("cityHolder").style.background = "#000";
+
   } else {
     var current_hours = hours - 6;
     var current_time = (current_hours*60) + minutes;
     var twelve_hours = (12*60);
     var fraction = (current_time / twelve_hours);
+    // Sun for day
+    solar.graphics.beginFill("Yellow").drawCircle(0, 0, 50);
+    stage.addChild(solar);
+    document.getElementById("cityHolder").style.background = "#ddfffe";
   }
 
-  solar.x = fraction * stage.canvas.width
-  solar.y = fraction * (stage.canvas.height + 144)
-  stage.update();
+  if (fraction > .5) {
+    var solar_height = fraction - .5;
+    solar_y = solar_height / .5
+  } else {
+    var solar_height = .5 - fraction;
+  }
+    solar_y = solar_height / .5
 
-  alert(current_hours + ' hours');
-  alert (minutes + ' minutes');
-  alert (current_time + ' current time');
-  alert(fraction + ' ratio');
-  alert(solar.x);
+  alert(solar_y);
+  // Place the sun
+  solar.x = fraction * stage.canvas.width
+  solar.y = solar_y * stage.canvas.height + 50
+  stage.update();
   alert(solar.y);
 
+  // Cloud object
   var circle = new createjs.Shape();
   circle.graphics.beginFill("white").drawCircle(0, 0, 50);
   circle.x = 100;

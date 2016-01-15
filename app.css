@@ -3,5 +3,8 @@ body {
 }
 #liveCity {
   width: 100%;
-  background: #ddfffe;
+  background: transparent;
+}
+#cityHolder {
+  background: #000;
 }
